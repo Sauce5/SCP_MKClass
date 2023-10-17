@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
 
   // Get environment variable MKLIB
 
-  p = getenv("MKLIB");
+  p = "../local/mkclass"; //getenv("MKLIB");
   if(!p) {
     fprintf(Log,"MKLIB not set: using default MKLIB path: /usr/local/mkclass\n");
     strcpy(MKLIB,"/usr/local/mkclass");

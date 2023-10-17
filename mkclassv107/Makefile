@@ -1,10 +1,10 @@
 CC = gcc
-CFLAGS = -O3
+#CFLAGS = -O3
 #Replace the CFLAGS line above with the CFLAGS line below to compile with 
 #gcc on a 64-bit machine
-#CFLAGS = -O3 -m64 -mtune=native
+CFLAGS = -O3 -m64 -mtune=native
 LDLIBS = -lm
-LOCALBIN = /usr/local/bin
+LOCALBIN = ./
 
 all: mkclass mkprelim srebin0 smooth2
 
@@ -44,4 +44,16 @@ install:
 	mv mkprelim $(LOCALBIN)
 	mv srebin0 $(LOCALBIN)
 	mv smooth2 $(LOCALBIN)
+	rm -f *.o
+
+clean:
+	rm -f mkclass
+	rm -f mkprelim
+	rm -f srebin0
+	rm -f smooth2
+	rm -f .mat
+	rm -f out.out
+	rm -f temp.out
+	rm -f test.out
+	rm -f normal.dat
 	rm -f *.o

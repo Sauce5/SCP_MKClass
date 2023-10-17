@@ -1,2 +1,6 @@
 test.*
+*.exe
 
+out.out
+temp.out
+.mat
