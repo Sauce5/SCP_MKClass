@@ -40,10 +40,10 @@ smooth2: smooth2.o util.o
 smooth2.o: smooth2.c util.h
 
 install: 
-	mv mkclass $(LOCALBIN)
-	mv mkprelim $(LOCALBIN)
-	mv srebin0 $(LOCALBIN)
-	mv smooth2 $(LOCALBIN)
+#mv -f mkclass $(LOCALBIN)
+#mv -f mkprelim $(LOCALBIN)
+#mv -f srebin0 $(LOCALBIN)
+#mv -f smooth2 $(LOCALBIN)
 	rm -f *.o
 
 clean:
