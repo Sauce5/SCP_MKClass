@@ -4,3 +4,5 @@ test.*
 out.out
 temp.out
 .mat
+
+*.o
