@@ -1,2 +1,2 @@
 local/mkclass/*.rbn linguist-detectable=false
-local/mkclass/*.rbn linguist-vendored
+local/mkclass/*.rbx linguist-detectable=false
