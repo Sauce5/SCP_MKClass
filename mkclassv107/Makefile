@@ -5,6 +5,7 @@ CC = gcc
 CFLAGS = -O3 -m64 -mtune=native
 LDLIBS = -lm
 LOCALBIN = ./
+IMGUI_DIR = ../imgui/
 
 all: mkclass mkprelim srebin0 smooth2
 
@@ -44,6 +45,10 @@ install:
 #mv -f mkprelim $(LOCALBIN)
 #mv -f srebin0 $(LOCALBIN)
 #mv -f smooth2 $(LOCALBIN)
+	cp -f mkclass.exe $(IMGUI_DIR)
+	cp -f mkprelim.exe $(IMGUI_DIR)
+	cp -f srebin0.exe $(IMGUI_DIR)
+	cp -f smooth2.exe $(IMGUI_DIR)
 	rm -f *.o
 
 clean:
