@@ -3,5 +3,7 @@
 #include "imgui.h"
 
 namespace SCPGUI {
-    void renderUI();
+    void seperator();
+    void renderSidebar();
+    void renderMainWindow();
 }

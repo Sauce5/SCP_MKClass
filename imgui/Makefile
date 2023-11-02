@@ -14,7 +14,7 @@
 #CXX = g++
 #CXX = clang++
 
-EXE = example_sdl2_opengl3
+EXE = mkc_scp
 IMGUI_DIR = ./
 SOURCES = main.cpp
 SOURCES += $(IMGUI_DIR)/imgui.cpp $(IMGUI_DIR)/imgui_demo.cpp $(IMGUI_DIR)/imgui_draw.cpp $(IMGUI_DIR)/imgui_tables.cpp $(IMGUI_DIR)/imgui_widgets.cpp
@@ -25,7 +25,7 @@ UNAME_S := $(shell uname -s)
 LINUX_GL_LIBS = -lGL
 
 CXXFLAGS = -std=c++11 -I$(IMGUI_DIR) -I$(IMGUI_DIR)
-CXXFLAGS += -g -Wall -Wformat
+CXXFLAGS += -g -Wall -Wformat -static
 LIBS =
 
 ##---------------------------------------------------------------------

@@ -9,6 +9,8 @@
 
 #define WIDTH 1280
 #define HEIGHT 720
+#define SIDE_WIDTH (WIDTH / 5)
+#define MAIN_WIDTH (WIDTH - SIDE_WIDTH)
 #include "scp_gui.h"
 
 #include "imgui.h"
@@ -149,9 +151,16 @@ int main(int, char**)
         window_flags |= ImGuiWindowFlags_NoResize;
 
         ImGui::SetNextWindowPos(ImVec2(0, 0));
-        ImGui::SetNextWindowSize(ImVec2(WIDTH, HEIGHT));
-        if (ImGui::Begin("MKClass SCP Edition - DEMO", NULL, window_flags)) {
-            SCPGUI::renderUI();
+        ImGui::SetNextWindowSize(ImVec2(SIDE_WIDTH, HEIGHT));
+        if (ImGui::Begin("Sidebar", NULL, window_flags)) {
+            SCPGUI::renderSidebar();
+        }
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(SIDE_WIDTH, 0));
+        ImGui::SetNextWindowSize(ImVec2(MAIN_WIDTH, HEIGHT));
+        if (ImGui::Begin("Main Window", NULL, window_flags)) {
+            SCPGUI::renderMainWindow();
         }
         ImGui::End();
 
