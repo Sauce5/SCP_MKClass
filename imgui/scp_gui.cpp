@@ -168,6 +168,33 @@ namespace SCPGUI {
 
     void renderVisWindow() {
         ImGui::Text("Visualization goes here!");
+
+        // get floats from file, store in string
+        /*ifstream ifile;
+        ifile.open("../local/mkclass/libr18/t010l30p00.rbn");
+        string str, out = "";
+        while (getline(ifile, str)) {
+            out += str + "\n";
+        }
+        ifile.close();*/
+
+        // first 13 values from libr18/t010l30p00.rbn
+        float vals[] = {
+            3.540896e-01,
+            9.077920e-01,
+            9.116138e-01,
+            9.175572e-01,
+            9.366440e-01,
+            9.639356e-01,
+            9.617474e-01,
+            9.631844e-01,
+            9.718450e-01,
+            9.820666e-01,
+            1.003503e+00,
+            1.003325e+00,
+            9.871974e-01
+        };
+        ImGui::PlotLines("Spectrum Vis Test", vals, IM_ARRAYSIZE(vals), 0, NULL, FLT_MAX, FLT_MAX, ImVec2(0.0f, -5.0f));
     }
 
     void renderConsoleLog() {
