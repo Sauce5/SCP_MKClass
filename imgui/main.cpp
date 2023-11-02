@@ -1,16 +1,11 @@
-// Dear ImGui: standalone example application for SDL2 + OpenGL
-// (SDL is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan/Metal graphics context creation, etc.)
-
-// Learn about Dear ImGui:
-// - FAQ                  https://dearimgui.com/faq
-// - Getting Started      https://dearimgui.com/getting-started
-// - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
-// - Introduction, links and more at the top of imgui.cpp
-
-#define WIDTH 1280
-#define HEIGHT 720
-#define SIDE_WIDTH (WIDTH / 5)
-#define MAIN_WIDTH (WIDTH - SIDE_WIDTH)
+#define WIDTH       1280
+#define HEIGHT       720
+#define SIDE_WIDTH  (WIDTH / 5)
+#define SIDE_HEIGHT HEIGHT
+#define LOG_WIDTH   (WIDTH - SIDE_WIDTH)
+#define LOG_HEIGHT  (HEIGHT / 3)
+#define VIS_WIDTH   (WIDTH - SIDE_WIDTH)
+#define VIS_HEIGHT  (HEIGHT - LOG_HEIGHT)
 #include "scp_gui.h"
 
 #include "imgui.h"
@@ -73,7 +68,7 @@ int main(int, char**)
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
     SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI); // | SDL_WINDOW_RESIZABLE);
-    SDL_Window* window = SDL_CreateWindow("MKClass SCP Edition - DEMO", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, window_flags);
+    SDL_Window* window = SDL_CreateWindow("MKClass SCP Edition", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, window_flags);
     SDL_GLContext gl_context = SDL_GL_CreateContext(window);
     SDL_GL_MakeCurrent(window, gl_context);
     SDL_GL_SetSwapInterval(1); // Enable vsync
@@ -87,7 +82,6 @@ int main(int, char**)
 
     // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-    //ImGui::StyleColorsLight(); // we might as well delete this, it's not a great style
 
     // Setup Platform/Renderer backends
     ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
@@ -151,16 +145,23 @@ int main(int, char**)
         window_flags |= ImGuiWindowFlags_NoResize;
 
         ImGui::SetNextWindowPos(ImVec2(0, 0));
-        ImGui::SetNextWindowSize(ImVec2(SIDE_WIDTH, HEIGHT));
+        ImGui::SetNextWindowSize(ImVec2(SIDE_WIDTH, SIDE_HEIGHT));
         if (ImGui::Begin("Sidebar", NULL, window_flags)) {
             SCPGUI::renderSidebar();
         }
         ImGui::End();
 
         ImGui::SetNextWindowPos(ImVec2(SIDE_WIDTH, 0));
-        ImGui::SetNextWindowSize(ImVec2(MAIN_WIDTH, HEIGHT));
-        if (ImGui::Begin("Main Window", NULL, window_flags)) {
-            SCPGUI::renderMainWindow();
+        ImGui::SetNextWindowSize(ImVec2(VIS_WIDTH, VIS_HEIGHT));
+        if (ImGui::Begin("Visualization Window", NULL, window_flags)) {
+            SCPGUI::renderVisWindow();
+        }
+        ImGui::End();
+
+        ImGui::SetNextWindowPos(ImVec2(SIDE_WIDTH, VIS_HEIGHT));
+        ImGui::SetNextWindowSize(ImVec2(LOG_WIDTH, LOG_HEIGHT));
+        if (ImGui::Begin("Console Log", NULL, window_flags)) {
+            SCPGUI::renderConsoleLog();
         }
         ImGui::End();
 

@@ -155,7 +155,11 @@ namespace SCPGUI {
         }
     }
 
-    void renderMainWindow() {
+    void renderVisWindow() {
+        ImGui::Text("Visualization goes here!");
+    }
+
+    void renderConsoleLog() {
         ImGui::Text(mkc_out.c_str());
 
         seperator();

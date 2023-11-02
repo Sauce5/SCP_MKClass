@@ -5,5 +5,6 @@
 namespace SCPGUI {
     void seperator();
     void renderSidebar();
-    void renderMainWindow();
+    void renderVisWindow();
+    void renderConsoleLog();
 }
