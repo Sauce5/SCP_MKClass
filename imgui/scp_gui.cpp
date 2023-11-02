@@ -2,11 +2,13 @@
 #include <fstream>
 #include <string>
 #include <filesystem>
+#include <vector>
 
 #include "scp_gui.h"
 #include "imgui.h"
 
 using namespace std;
+namespace fs = std::filesystem;
 
 namespace SCPGUI {
     static char mkc_command[256];
@@ -89,16 +91,25 @@ namespace SCPGUI {
         seperator();
 
         // select spectrum
-        string spectra[] = {
+        std::vector<string> paths = {};
+        string path = "../local/mkclass/" + spectra_libs[lib_selected];
+        for (const auto & entry : fs::directory_iterator(path)) {
+            string path_str = entry.path().string();
+            path_str = path_str.erase(0, path.length()+1);
+            paths.push_back(path_str);
+        }
+
+        /*string spectra[] = {
             "t010l30p00.rbn",
             "tXXXlYYp00-1.rbn",
             "tXXXlYYp00-2.rbn",
             "tXXXlYYp00-3.rbn",
             "tXXXlYYp00-4.rbn"
-        };
-        int spectra_n = 5;
+        };*/
+        std::vector<string> spectra = paths;
+        int spectra_n = spectra.size(); //5;
         static int spectrum_selected = 0;
-        ImGui::Text("Spectrum (default: t010l30p00.rbn)");
+        ImGui::Text("Spectrum:");
         if (ImGui::BeginListBox("2")) {
             for (int n = 0; n < spectra_n; n++) {
                 const bool is_selected = (spectrum_selected == n);
