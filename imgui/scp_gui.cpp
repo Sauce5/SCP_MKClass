@@ -15,6 +15,9 @@ namespace SCPGUI {
     static string mkc_out = "";
     static string mkc_log = "";
 
+    static string sel_lib;
+    static string sel_spec;
+
     // just some shorthand for seperating widgets
     void seperator() {
         ImGui::Spacing();
@@ -147,8 +150,8 @@ namespace SCPGUI {
         // submit button
         if (ImGui::Button("Classify")) {
             // build the command
-            string sel_lib = spectra_libs[lib_selected];
-            string sel_spec = spectra[spectrum_selected]; //"t010l30p00.rbn"; // default spectrum for now
+            sel_lib = spectra_libs[lib_selected];
+            sel_spec = spectra[spectrum_selected]; //"t010l30p00.rbn"; // default spectrum for now
             string sel_out = "./mkc.out";
             string sel_log = "./mkc.log";
             int sel_roughtype = roughtype;
@@ -167,34 +170,54 @@ namespace SCPGUI {
     }
 
     void renderVisWindow() {
-        ImGui::Text("Visualization goes here!");
-
-        // get floats from file, store in string
-        /*ifstream ifile;
-        ifile.open("../local/mkclass/libr18/t010l30p00.rbn");
-        string str, out = "";
+        ifstream ifile;
+        ifile.open("../local/mkclass/" + sel_lib + "/" + sel_spec);
+        string str;
+        vector<string> out = vector<string>();
         while (getline(ifile, str)) {
-            out += str + "\n";
+            out.push_back(str + "\n");
         }
-        ifile.close();*/
+        ifile.close();
 
-        // first 13 values from libr18/t010l30p00.rbn
-        float vals[] = {
-            3.540896e-01,
-            9.077920e-01,
-            9.116138e-01,
-            9.175572e-01,
-            9.366440e-01,
-            9.639356e-01,
-            9.617474e-01,
-            9.631844e-01,
-            9.718450e-01,
-            9.820666e-01,
-            1.003503e+00,
-            1.003325e+00,
-            9.871974e-01
-        };
-        ImGui::PlotLines("Spectrum Vis Test", vals, IM_ARRAYSIZE(vals), 0, NULL, FLT_MAX, FLT_MAX, ImVec2(0.0f, -5.0f));
+        float *x0, *y0;
+        x0 = new float[out.size()];
+        y0 = new float[out.size()];
+
+        for (int i = 0; i < out.size(); i++) {
+            string currX = "";
+            string currY = "";
+            int j;
+            for (j = 0; out[i][j] != ' '; j++) {
+                currX += out[i][j];
+            }
+
+            for (j++; j < out[i].length(); j++) {
+                currY += out[i][j];
+            }
+
+            x0[i] = atof(currX.c_str());
+            y0[i] = atof(currY.c_str());
+        }
+
+        /*
+        long l;
+        char buffer[200],*tmp;
+        FILE *in;
+
+        in = fopen(infile,"r");
+        l = 0;
+        while(fgets(buffer,190,in) != NULL) {
+        if(buffer[0] == '#') continue;
+        tmp = strtok(buffer," ");
+        x[l] = atof(tmp);
+        tmp = strtok(NULL," ");
+        y[l] = atof(tmp);
+        l++;
+        }
+        fclose(in);
+        */
+
+        ImGui::PlotLines("Spectrum Vis Test", y0, out.size(), 0, NULL, FLT_MAX, FLT_MAX, ImVec2(0.0f, -5.0f));
     }
 
     void renderConsoleLog() {
