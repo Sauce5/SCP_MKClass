@@ -2,10 +2,11 @@
 #define HEIGHT       720
 #define SIDE_WIDTH  (WIDTH / 5)
 #define SIDE_HEIGHT HEIGHT
+#define VIS_LOG_OFFSET 25
 #define LOG_WIDTH   (WIDTH - SIDE_WIDTH)
-#define LOG_HEIGHT  (HEIGHT / 3)
+#define LOG_HEIGHT  (HEIGHT / 3)          - VIS_LOG_OFFSET
 #define VIS_WIDTH   (WIDTH - SIDE_WIDTH)
-#define VIS_HEIGHT  (HEIGHT - LOG_HEIGHT)
+#define VIS_HEIGHT  (HEIGHT - LOG_HEIGHT) + VIS_LOG_OFFSET + VIS_LOG_OFFSET
 #include "scp_gui.h"
 
 #include "imgui.h"

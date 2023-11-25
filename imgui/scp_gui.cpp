@@ -27,13 +27,13 @@ namespace SCPGUI {
 
     void run_command(string sel_out, string sel_log) {
         static int err;
-        err = system(mkc_command); // this does the actual execution - probably not the best way to do this though
+        err = system(mkc_command);
+        ofstream ofile;
         if (err) {
             mkc_out = "";
             mkc_log = "INPUT ERROR";
         } else {
             ifstream ifile;
-            ofstream ofile;
 
             // open ./mkc.out file, send ./mkc.out to variable out
             ifile.open(sel_out);
@@ -54,15 +54,15 @@ namespace SCPGUI {
 
             mkc_out = out;
             mkc_log = log;
-
-            // clear mkc.log and mkc.out
-            ofile.open(sel_out);
-            ofile << "";
-            ofile.close();
-            ofile.open(sel_log);
-            ofile << "";
-            ofile.close();
         }
+
+        // clear mkc.log and mkc.out
+        ofile.open(sel_out);
+        ofile << "";
+        ofile.close();
+        ofile.open(sel_log);
+        ofile << "";
+        ofile.close();
     }
 
     void renderSidebar() {
@@ -102,13 +102,6 @@ namespace SCPGUI {
             paths.push_back(path_str);
         }
 
-        /*string spectra[] = {
-            "t010l30p00.rbn",
-            "tXXXlYYp00-1.rbn",
-            "tXXXlYYp00-2.rbn",
-            "tXXXlYYp00-3.rbn",
-            "tXXXlYYp00-4.rbn"
-        };*/
         std::vector<string> spectra = paths;
         int spectra_n = spectra.size(); //5;
         static int spectrum_selected = 0;
@@ -183,7 +176,7 @@ namespace SCPGUI {
         x0 = new float[out.size()];
         y0 = new float[out.size()];
 
-        for (int i = 0; i < out.size(); i++) {
+        for (int i = 0; i < (int) out.size(); i++) {
             string currX = "";
             string currY = "";
             int j;
@@ -191,7 +184,7 @@ namespace SCPGUI {
                 currX += out[i][j];
             }
 
-            for (j++; j < out[i].length(); j++) {
+            for (j++; j < (int) out[i].length(); j++) {
                 currY += out[i][j];
             }
 
@@ -199,25 +192,8 @@ namespace SCPGUI {
             y0[i] = atof(currY.c_str());
         }
 
-        /*
-        long l;
-        char buffer[200],*tmp;
-        FILE *in;
-
-        in = fopen(infile,"r");
-        l = 0;
-        while(fgets(buffer,190,in) != NULL) {
-        if(buffer[0] == '#') continue;
-        tmp = strtok(buffer," ");
-        x[l] = atof(tmp);
-        tmp = strtok(NULL," ");
-        y[l] = atof(tmp);
-        l++;
-        }
-        fclose(in);
-        */
-
-        ImGui::PlotLines("Spectrum Vis Test", y0, out.size(), 0, NULL, FLT_MAX, FLT_MAX, ImVec2(0.0f, -5.0f));
+        ImGui::PlotLines("Flux", y0, out.size(), 0, NULL, FLT_MAX, FLT_MAX, ImVec2(975.0f, -50.0f));
+        ImGui::Text("Wavelength");
     }
 
     void renderConsoleLog() {
