@@ -180,7 +180,6 @@ int main(int argc, char *argv[])
   }
 
   // Strip trailing / from MKLIB
-
   l = strlen(MKLIB);
   if(MKLIB[l-1] == '/') MKLIB[l-1] = '\0';
 
@@ -193,7 +192,6 @@ int main(int argc, char *argv[])
   strcat(libmatch,".mat");
 
   //printf("MKCLASS v1.07 %s\n",name);
-
   in = fopen(name,"r");
   if(in == NULL) {
     printf("\nCannot find input spectrum file\n");
@@ -251,8 +249,6 @@ int main(int argc, char *argv[])
   /* Now get a rough initial type.  If you are classifying a rectified
 spectrum, use roughtype 1, if a flux-calibrated spectrum, roughtype 2 is
 better, but experiment to see which works for your spectra */
-
-
   if(flagR == 1) roughtype(lib,name,&isp,&ilt);
   if(flagR == 2) roughtype2(lib,name,&isp,&ilt);
   fprintf(Log,"t%03.0fl%1.0f0p00.rbn\n",10*isp,ilt);
@@ -350,7 +346,6 @@ moment, we are doing this only if flagR is 2 */
 specifies a template should be used.  Rectified libraries should not apply
 templates.  It is probably advantageous to use templates for flux libraries,
 as this will help to correct the SED before the use of powell below. */
-
   // Note: changed spt limit from 39.0 to scool
   if(spt <= scool && flag_template == 1) 
     fprintf(Log,"Spectral template applied\n");
@@ -362,7 +357,6 @@ as this will help to correct the SED before the use of powell below. */
   }
 
   // Now refine initial type using least squares with powell
-
   pcode[1] = isp;
   pcode[2] = ilt;
 
@@ -602,7 +596,6 @@ void Bclass()
 
   /* First, check to make certain that this is not really an A-type star
      by looking at the Ca K-line */
-
   ax = spt-1;
   bx = spt;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,sptCaK);
@@ -627,7 +620,6 @@ void Bclass()
 
   /* Let us now check that this is not an O-type star by examining an
      He II line */
-
   ax = spt-1;
   bx = spt;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,sptHeII);
@@ -643,7 +635,6 @@ void Bclass()
   /* We now determine an approximate temperature type based on Helium I
      strengths and metallic-line ratios (more appropriate for early-B type 
      stars */
-
   ax = spt-1;
   bx = spt;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,sptHeImet);
@@ -654,7 +645,6 @@ void Bclass()
   Spcode = spt;
 
   /* Now improve the luminosity type */
-
   ax = lum-0.5;
   bx = lum;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,lumratiomin);
@@ -663,7 +653,6 @@ void Bclass()
   fprintf(Log,"Luminosity type = %f\n",lum);
 
   /* Polish the temperature type */ 
-
   Lumcode = lum;
 
   ax = spt-1;
@@ -674,7 +663,6 @@ void Bclass()
   fprintf(Log,"Polished helium/metal spectral type = %f\n",spt);
 
   /* Now check for helium peculiarities */
-
   diff = heIpec(spt,lum);
 
   fprintf(Log,"Helium strength = %f\n",diff);
@@ -683,7 +671,6 @@ void Bclass()
   if(diff >= 0.1) strcpy(PEC,"Helium strong");
 
   /* Check for any other obvious peculiarities */
-
   pec = peculiarity(spt,lum,&he,&sr,&si,&eu,&cr,&ba,&ch,&cn);
 
   /* Check to see if the star is a Lambda Boo star by looking at the
@@ -796,7 +783,6 @@ void Aclass()
   /* We first begin by improving the luminosity type assuming the
 preliminary spectral type.  This can help in the case of stars in which
 the hydrogen-line profiles have been poorly rectified */
-
   ax = lum-0.5;
   bx = lum;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,lumratiomin);
@@ -805,7 +791,6 @@ the hydrogen-line profiles have been poorly rectified */
   fprintf(Log,"lum = %f\n",lum);
 
   /* We also check at this point for obvious peculiarities */
-
   pec = peculiarity(spt,lum,&he,&sr,&si,&eu,&cr,&ba,&ch,&cn);
 
 
@@ -896,7 +881,6 @@ the hydrogen-line profiles have been poorly rectified */
   } else {
   /* Late A-type star: Determine H-line type, assuming preliminary 
      luminosity type */
-
     /* Check to see if the star is a Lambda Boo star by looking at the
        Mg II 4481 line */
     mg = MgII(spt,lum);
@@ -967,7 +951,6 @@ the hydrogen-line profiles have been poorly rectified */
     fprintf(Log,"K-line type = %f\n",sptK);
 
     // Pass it back to FGclass if it is F-type but not an Am star
-
     if(sptK > 22.8 && spth > 22.8 && iterate < 5) {
       spt = spth;
       FGclass();
@@ -975,7 +958,6 @@ the hydrogen-line profiles have been poorly rectified */
     }
 
     // Determine metallic-line type, assuming preliminary luminosity type
-
     ax = spt-1;
     bx = spt;
     mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,sptmetal);
@@ -1038,7 +1020,6 @@ the hydrogen-line profiles have been poorly rectified */
      Lumcode = lum;
 
      // Introduce chi2 selection code starting here
-
      code2spt(spt);
      code2lum(lum);
      CHI2 = match(spt,lum);
@@ -1240,7 +1221,6 @@ void FGclass()
 
 
   // Now, begin check for peculiarities
-
   // If Hydrogen-line type is earlier than F1, check to see if Lambda Boo
   if(spth <= 23.5 && flagmetal == 1) {
     mg = MgII(spt,lum);
@@ -1260,7 +1240,6 @@ void FGclass()
   }
 
   // If Hydrogen-line type is earlier than F5, check for Am characteristics
-
   if(spth <= 27.0) {
     ax = spth-1;
     bx = spth;
@@ -1277,8 +1256,8 @@ void FGclass()
       Aclass();
       return;
     }
+	  
     // Also check for Ap-type peculiarities
-
     pec = peculiarity(spth,lum,&he,&sr,&si,&eu,&cr,&ba,&ch,&cn);
     if(pec == 1) {
        strcpy(PEC," ");
@@ -1292,7 +1271,6 @@ void FGclass()
 
   /* Determine an approximate luminosity class, leaving out Sr II lines.
      Then, check for a barium peculiarity.  */
-
   Spcode = spth;
   Ba = 1; /* So that Sr II is left out of luminosity classification */
   lumBa = lum;
@@ -1382,7 +1360,6 @@ void FGclass()
   Lumcode = lum;
 
   // If Ba is not peculiar, then accept the earlier luminosity class
-
   subh = subclass(spth);
   subm = subclass(sptm);
 
@@ -1547,7 +1524,6 @@ void KMclass()
   strcpy(PEC,"");
 
   // Iterate on temperature and luminosity types twice
-
   fprintf(Log,"\nClassifying this star as a K/M star\n");
   iterate++;
 
@@ -1555,7 +1531,6 @@ void KMclass()
 don't constitute a good criterion for K/M stars, but can exclude a
 G spectral type.  Note: hydrogen index will give a latest hydrogen-line
 type of K2. */
-
   ax = spt-1;
   bx = spt;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,hydrogen_index);
@@ -1565,7 +1540,6 @@ type of K2. */
 
   /* Now the metallic-line type.  Again, not great for K/M stars,
      but this can help detect an early K, metal-weak star */
-
   ax = spth-1;
   bx = spth;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,sptmetal);
@@ -2063,7 +2037,6 @@ int lam_boo(float spcode, float lumcode, float *htype, float *metaltype)
 
   /* Let us assume the star is a dwarf, and then find the spectral type
      that best matches the hydrogen lines */
-
   Lumcode = 5.0;
 
   fprintf(Log,"Classifying this star as a Lambda Boo star\n");
@@ -2071,7 +2044,6 @@ int lam_boo(float spcode, float lumcode, float *htype, float *metaltype)
   /* Start H-line type out as F0, so that the routine has to work back
 to the hydrogen maximum, rather than starting near the hydrogen maximum
 and spuriously moving into the B-type stars */
-
   spth = 23.0;
 
   ax = spth - 1;
@@ -2082,7 +2054,6 @@ and spuriously moving into the B-type stars */
   *htype = spth; 
 
   /* Now the metallic-line type */
-
   ax = spt-1;
   bx = spt;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,sptmetal);
@@ -2104,12 +2075,11 @@ and spuriously moving into the B-type stars */
 }
 
 /* This function tries to decide whether an A-type star is indeed metal
-weak, and then attempts to distinguish between a Lambda Boo star and another
-type of metal-weak A-type star, such as a horizontal-branch star.  In
-order to not over interpret the spectrum, metal-weak non-Lam Boo stars
-are simply labelled "metal-weak".  This code also takes care not to label
-luminous A-type stars, which can have weak 4481 lines as Lambda Boo. */
-
+   weak, and then attempts to distinguish between a Lambda Boo star and another
+   type of metal-weak A-type star, such as a horizontal-branch star.  In
+   order to not over interpret the spectrum, metal-weak non-Lam Boo stars
+   are simply labelled "metal-weak".  This code also takes care not to label
+   luminous A-type stars, which can have weak 4481 lines as Lambda Boo. */
 int lam_boo2(float spcode, float lumcode, float *htype, float *metaltype)
 {
   float *x,*y;
@@ -2123,11 +2093,10 @@ int lam_boo2(float spcode, float lumcode, float *htype, float *metaltype)
      incorrectly classified as Lambda Boo stars */
   if(lumcode < 3.0) return(0);
 
-  /* We assume a preliminary luminosity type of IV-V, which is a compromise
+  /* We assume a preliminary luminosity type of IV-V, which is a compromise 
 between the dwarf status of Lambda Boo stars and IV or III type of HB stars.
 We use that preliminary luminosity type to find the spectral type that best 
 matches the hydrogen lines, and then we iterate further. */
-
   Lumcode = 4.5;
 
   fprintf(Log,"Classifying this star as a metal-weak A-type star. spt = %f\n",spt);
@@ -2135,7 +2104,6 @@ matches the hydrogen lines, and then we iterate further. */
   /* Start H-line type out as F0, so that the routine has to work back
 to the hydrogen maximum, rather than starting near the hydrogen maximum
 and spuriously moving into the B-type stars */
-
   spth = 23.0;
 
   ax = spth - 1;
@@ -2166,7 +2134,6 @@ and spuriously moving into the B-type stars */
   }
 
   /* Now the metallic-line type */
-
   // first, the K-line type.
   ax = 16.0;
   bx = 17.0;
@@ -2175,7 +2142,6 @@ and spuriously moving into the B-type stars */
   fprintf(Log,"K-line type = %f\n",sptK);
 
   // then the metallic-line type
-
   ax = 16.0;
   bx = 17.0;
   mnbrak(&ax,&bx,&cx,&fa,&fb,&fc,sptmetal);
@@ -2185,7 +2151,6 @@ and spuriously moving into the B-type stars */
   /* If the dispersion is low, the metallic-line type can be faulty, 
      especially in metal-weak stars.  So, if sptm < sptK, then correct 
      sptm to sptK */
-
   if(sptm < sptK - 0.5) {
     sptm = sptK;
     fprintf(Log,"Correcting metallic-line type to K-line type\n");
@@ -2211,7 +2176,6 @@ and spuriously moving into the B-type stars */
      FHB stars.  For stars earlier than A5, we use the actual luminosity
 type, determined above.  For stars later than A5, however, we use the ratio
 between Ca I 4226 and Fe II 4233. */
-
   if(spth < 20.0) {
     if(lum < 4.3 && lb == 1) lb = 2;
   } else {
@@ -2224,7 +2188,6 @@ between Ca I 4226 and Fe II 4233. */
 
   /* If the star is a Lambda Boo star, assume the luminosity class is V
      and redetermine the hydrogen-line type */
-
   return(lb);
 }
 
