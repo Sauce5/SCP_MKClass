@@ -5,5 +5,9 @@ test.*
 out.out
 temp.out
 .mat
+*.dat
+.cor
+
+imgui.ini
 
 *.o
