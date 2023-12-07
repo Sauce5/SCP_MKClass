@@ -1,7 +1,7 @@
 // Applies a flux template (derived from a library spectrum) to a program spectrum to help deal with poorly flux-calibrated spectra
 #include <stdio.h>
 #include <stdlib.h>
-double fflux();
+double fflux(float *x, float *y, double band, int kin);
 
 void templateDSO(float *xin,float *yin,float *xt,float *yt,int kin)
 {
@@ -57,10 +57,7 @@ void templateDSO(float *xin,float *yin,float *xt,float *yt,int kin)
 }
 
 
-double fflux(x,y,band,kin)
-float *x,*y;
-double band;
-int kin;
+double fflux(float *x, float *y, double band, int kin)
 {
   static double wave[21] = {-10.0,-9.0,-8.0,-7.0,-6.0,-5.0,-4.0,-3.0,-2.0,
                        -1.0,0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0};

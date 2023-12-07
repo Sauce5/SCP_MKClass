@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-FILE *ffopen(Name,mode)
-char *Name,*mode;
+FILE *ffopen(char *Name, char *mode)
 {
   FILE *fp;
   extern FILE *Log;

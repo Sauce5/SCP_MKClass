@@ -6,7 +6,7 @@
 #define I 37
 #define J 3
 #define K 1
-FILE *ffopen();
+FILE *ffopen(char *Name, char *mode);
 
 void sp2class(float spcode, float lumcode, float metcode, 
 	      float *x, float *y, int *n)
@@ -89,6 +89,11 @@ void sp2class(float spcode, float lumcode, float metcode,
   i=0;
   while(fscanf(in4,"%f %f",&q,&y4[i]) != EOF) i++;
 
+  fclose(in1);
+  fclose(in2);
+  fclose(in3);
+  fclose(in4);
+
   nq = i;
 
   for(i=0;i<nq;i++) {
@@ -99,10 +104,6 @@ void sp2class(float spcode, float lumcode, float metcode,
   free_vector(y2,0,N);
   free_vector(y3,0,N);
   free_vector(y4,0,N);
-  fclose(in1);
-  fclose(in2);
-  fclose(in3);
-  fclose(in4);
   return;
 }
 

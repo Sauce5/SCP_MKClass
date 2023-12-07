@@ -1,0 +1,2 @@
+for testing:
+./mkclass ../local/mkclass/libr18/t030l10p00.rbn libr18 mkc.out mkc.log 2 3

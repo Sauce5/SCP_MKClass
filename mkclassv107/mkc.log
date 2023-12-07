@@ -1,0 +1,57 @@
+MKCLASS v1.07: libr18 ../local/mkclass/libr18/t030l10p00.rbn
+Roughtype = 2
+MKLIB read from environment as ../local/mkclass
+prelim = shift
+Gband = 0.996311 CaI = 0.499609 HeI4471 = 0.715594 CaK = 0.961332 TiO = 0.000000
+Roughtype2: sp1 = 12.995611  sp2 = 13.244856  sp3 = 37.000000
+Roughtype2: final spt = 13.244856
+t130l50p00.rbn
+Initial type = t130l50p00.rbn
+wavemax = 3914.50
+Emission routine: ave = 0.920069 sdev = 0.096328
+wavemax = 3914.50
+Emission routine: ave = 0.920069 sdev = 0.096328
+emission e = 0
+NN3: slope = 0.000075  height = 0.978038 depth = 0.312743
+wid1 = 4337.500000  wid2 = 4343.000000
+NN3: ratio = 17.586300 width = 5.500000
+Star appears normal
+spt = 6.000188  lum = 3.152716
+Initial Spectral type estimate = O9 III
+Classifying as a B-type star
+K-line type = 7.605066
+sum1 = 39.546497 sum2 = 118.280022 wavemin = 4340.500000
+D2 = 0.822233
+rw = 4343.000000  bw = 4338.500000
+D2 =  4.5
+HeII type = 6.000188
+Classifying as an O-type star
+HeII type = 6.000188
+1: O9 III  0.000735
+Classifying as a B-type star
+K-line type = 7.605066
+sum1 = 39.546497 sum2 = 118.280022 wavemin = 4340.500000
+D2 = 0.822233
+rw = 4343.000000  bw = 4338.500000
+D2 =  4.5
+HeII type = 6.000188
+Classifying as an O-type star
+HeII type = 6.000188
+2: O9 III  0.000735
+Classifying as a B-type star
+K-line type = 7.605066
+sum1 = 39.546497 sum2 = 118.280022 wavemin = 4340.500000
+D2 = 0.822233
+rw = 4343.000000  bw = 4338.500000
+D2 =  4.5
+HeII type = 6.000188
+Classifying as an O-type star
+HeII type = 6.000188
+
+Best iteration: I = 3
+3: O9 III  0.000735
+1:  O9 III 			|  vgood  | \\  7.4e-04
+2:  O9 III 			|  vgood  | \\  7.4e-04
+3:  O9 III 			|  vgood  | \\  7.4e-04
+================================================
+

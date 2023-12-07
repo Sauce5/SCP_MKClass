@@ -3,6 +3,7 @@
 #include "util.h"
 #define SWAP(a,b) {temp=(a);(a)=(b);(b)=temp;}
 
+// gauss-jordan elimination
 void gaussj(float **a, int n, float **b, int m)
 {
 	int *indxc,*indxr,*ipiv;

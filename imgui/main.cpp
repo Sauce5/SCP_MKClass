@@ -145,6 +145,7 @@ int main(int, char**)
         window_flags |= ImGuiWindowFlags_NoCollapse;
         window_flags |= ImGuiWindowFlags_NoResize;
 
+        // Sidebar 
         ImGui::SetNextWindowPos(ImVec2(0, 0));
         ImGui::SetNextWindowSize(ImVec2(SIDE_WIDTH, SIDE_HEIGHT));
         if (ImGui::Begin("Sidebar", NULL, window_flags)) {
@@ -152,6 +153,7 @@ int main(int, char**)
         }
         ImGui::End();
 
+        // Visualization
         ImGui::SetNextWindowPos(ImVec2(SIDE_WIDTH, 0));
         ImGui::SetNextWindowSize(ImVec2(VIS_WIDTH, VIS_HEIGHT));
         if (ImGui::Begin("Visualization Window", NULL, window_flags)) {
@@ -159,6 +161,7 @@ int main(int, char**)
         }
         ImGui::End();
 
+        // Console Log
         ImGui::SetNextWindowPos(ImVec2(SIDE_WIDTH, VIS_HEIGHT));
         ImGui::SetNextWindowSize(ImVec2(LOG_WIDTH, LOG_HEIGHT));
         if (ImGui::Begin("Console Log", NULL, window_flags)) {

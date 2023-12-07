@@ -25,6 +25,12 @@ namespace SCPGUI {
         ImGui::Spacing();
     }
 
+    /**
+     * Run mkclass with arguments
+     * 
+     * @param sel_out = path to MKClass's output file
+     * @param sel_log = path to MKClass's log file
+    */
     void run_command(string sel_out, string sel_log) {
         static int err;
         err = system(mkc_command);
@@ -136,7 +142,7 @@ namespace SCPGUI {
         // number of iterations
         ImGui::Text("Number of Iterations");
         static int iter = 3;
-        ImGui::InputInt(" ", &iter, 1, 1); // doens't limit user input to positive numbers yet
+        ImGui::InputInt(" ", &iter, 1, 1);
         
         seperator();
 
@@ -144,7 +150,7 @@ namespace SCPGUI {
         if (ImGui::Button("Classify")) {
             // build the command
             sel_lib = spectra_libs[lib_selected];
-            sel_spec = spectra[spectrum_selected]; //"t010l30p00.rbn"; // default spectrum for now
+            sel_spec = spectra[spectrum_selected];
             string sel_out = "./mkc.out";
             string sel_log = "./mkc.log";
             int sel_roughtype = roughtype;
@@ -163,6 +169,7 @@ namespace SCPGUI {
     }
 
     void renderVisWindow() {
+        // open spectrum file, load it into string variable
         ifstream ifile;
         ifile.open("../local/mkclass/" + sel_lib + "/" + sel_spec);
         string str;
@@ -172,10 +179,10 @@ namespace SCPGUI {
         }
         ifile.close();
 
+        // parse spectrum string into arrays of wavelength (x) and flux (y) values
         float *x0, *y0;
         x0 = new float[out.size()];
         y0 = new float[out.size()];
-
         for (int i = 0; i < (int) out.size(); i++) {
             string currX = "";
             string currY = "";
@@ -192,6 +199,7 @@ namespace SCPGUI {
             y0[i] = atof(currY.c_str());
         }
 
+        // plug spectrum data into line graph
         ImGui::PlotLines("Flux", y0, out.size(), 0, NULL, FLT_MAX, FLT_MAX, ImVec2(975.0f, -50.0f));
         ImGui::Text("Wavelength");
     }

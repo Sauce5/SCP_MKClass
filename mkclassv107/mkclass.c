@@ -34,7 +34,7 @@ int lam_boo(float spcode, float lumcode,float *htype, float *metaltype);
 int lam_boo2(float spcode, float lumcode,float *htype, float *metaltype);
 float ratioCaIFeII();
 int emission(float *wave, float *flx, int N);
-FILE *ffopen();
+FILE *ffopen(char *Name, char *mode);
 float *X,*Y;
 float Lumcode;
 float Spcode;
@@ -46,8 +46,8 @@ void code2spt(float spcode);
 void code2lum(float lumcode);
 float sptcode(char ispt[]);
 float subclass(float sp);
-void getspectrum();
-void rebin();
+void getspectrum(char infile[], float x[], float y[], int *k);
+void rebin(float *x, float *y,int k,float *x2, float *y2, int *l1, int *l2, float start, float end, float dw);
 void Oclass();
 void Bclass();
 void Aclass();
@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
   strcat(corname,".cor");
   strcat(libmatch,".mat");
 
-  printf("MKCLASS v1.07 %s\n",name);
+  //printf("MKCLASS v1.07 %s\n",name);
 
   in = fopen(name,"r");
   if(in == NULL) {
@@ -1728,6 +1728,7 @@ float sptcode(char spt[])
 } 
 
 // I forget what this one does !
+// (used only in FGClass function)
 float subclass(float sp)
 {
   float spcode[21] = {20.0,21.0,23.0,24.0,25.0,26.0,27.0,28.0,29.0,
@@ -1750,11 +1751,7 @@ float subclass(float sp)
 }
 
 // Rebins the spectrum
-void rebin(x,y,k,x2,y2,l1,l2,start,end,dw)
-float *x,*y;
-float *x2,*y2;
-float start,end,dw;
-int k,*l1,*l2;
+void rebin(float *x, float *y,int k,float *x2, float *y2, int *l1, int *l2, float start, float end, float dw)
 {
     double wave;
     int l,j,i;

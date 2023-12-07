@@ -7,7 +7,7 @@ float *x2,*y2;
 void getspectrum();
 void rebin();
 
-main(int argc, char *argv[])
+void main(int argc, char *argv[])
 {
   float *xo,*yo;
   int l1,l2;
