@@ -11,6 +11,8 @@ using namespace std;
 namespace fs = std::filesystem;
 
 namespace SCPGUI {
+    static bool classified = false;
+
     static char mkc_command[256];
     static string mkc_out = "";
     static string mkc_log = "";
@@ -38,6 +40,7 @@ namespace SCPGUI {
         if (err) {
             mkc_out = "";
             mkc_log = "INPUT ERROR";
+            classified = false;
         } else {
             ifstream ifile;
 
@@ -60,6 +63,7 @@ namespace SCPGUI {
 
             mkc_out = out;
             mkc_log = log;
+            classified = true;
         }
 
         // clear mkc.log and mkc.out
@@ -105,7 +109,8 @@ namespace SCPGUI {
         for (const auto & entry : fs::directory_iterator(path)) {
             string path_str = entry.path().string();
             path_str = path_str.erase(0, path.length()+1);
-            paths.push_back(path_str);
+            if (path_str.length() >= 4 && path_str.substr(path_str.length() - 4) == ".rbn")
+                paths.push_back(path_str);
         }
 
         std::vector<string> spectra = paths;
@@ -201,7 +206,8 @@ namespace SCPGUI {
 
         // plug spectrum data into line graph
         ImGui::PlotLines("Flux", y0, out.size(), 0, NULL, FLT_MAX, FLT_MAX, ImVec2(975.0f, -50.0f));
-        ImGui::Text("Wavelength");
+        string start = classified ? "Wavelength (starts at " + to_string(x0[0]) + ")" : "Wavelength";
+        ImGui::Text(start.c_str());
     }
 
     void renderConsoleLog() {
